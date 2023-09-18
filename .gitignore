@@ -1,0 +1,9 @@
+.idea
+.env
+node_modules
+build
+*.zip
+*output.yaml
+.eslintrc.js
+.vscode
+aws

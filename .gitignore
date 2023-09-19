@@ -7,3 +7,4 @@ build
 .eslintrc.js
 .vscode
 aws
+*.js

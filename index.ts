@@ -1,17 +1,13 @@
-type User = {
-    name: string;
-    age: number;
-};
+import * as CloudWatchService from './services/CloudWatch';
 
-function isAdult(user: User): boolean {
-    return user.age >= 18;
+export async function handler(event, context, callback) {
+    let data = await CloudWatchService.getMetricData();
+
+    return callback(
+        null,
+        {
+            statusCode: 200,
+            body: data
+        }
+    );
 }
-
-const justine: User = {
-    name: 'Justine',
-    age: 44
-};
-
-const isJustineAnAdult = isAdult(justine);
-
-console.log("... result ", isJustineAnAdult, justine.age);

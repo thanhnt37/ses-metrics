@@ -22,10 +22,44 @@ export async function listMetrics(): Promise<any> {
 }
 
 export async function getMetricData(): Promise<any> {
+    let period = 60 * 60 * 24 * 14;
     let params = {
-        StartTime: new Date(Date.now() - 604800000),
+        StartTime: new Date(Date.now() - (period * 1000)),
         EndTime: new Date(),
         MetricDataQueries: [
+            {
+                Id: 'adabeat_ses_send_' + Date.now().toString(), /* required */
+                MetricStat: {
+                    Metric: {
+                        MetricName: 'Send',
+                        Namespace: 'AWS/SES'
+                    },
+                    Period: period,
+                    Stat: 'Sum',
+                },
+            },
+            {
+                Id: 'adabeat_ses_delivery_' + Date.now().toString(), /* required */
+                MetricStat: {
+                    Metric: {
+                        MetricName: 'Delivery',
+                        Namespace: 'AWS/SES'
+                    },
+                    Period: period,
+                    Stat: 'Sum',
+                },
+            },
+            {
+                Id: 'adabeat_ses_bounce_' + Date.now().toString(), /* required */
+                MetricStat: {
+                    Metric: {
+                        MetricName: 'Bounce',
+                        Namespace: 'AWS/SES'
+                    },
+                    Period: period,
+                    Stat: 'Sum',
+                },
+            },
             {
                 Id: 'adabeat_ses_bounce_rate_' + Date.now().toString(), /* required */
                 // AccountId: 'STRING_VALUE',
@@ -51,25 +85,14 @@ export async function getMetricData(): Promise<any> {
                 // ReturnData: true
             },
             {
-                Id: 'adabeat_ses_bounce_' + Date.now().toString(), /* required */
+                Id: 'adabeat_ses_complaint_rate_' + Date.now().toString(), /* required */
                 MetricStat: {
                     Metric: {
-                        MetricName: 'Bounce',
+                        MetricName: 'Reputation.ComplaintRate',
                         Namespace: 'AWS/SES'
                     },
-                    Period: 604800,
-                    Stat: 'Sum',
-                },
-            },
-            {
-                Id: 'adabeat_ses_delivery_' + Date.now().toString(), /* required */
-                MetricStat: {
-                    Metric: {
-                        MetricName: 'Delivery',
-                        Namespace: 'AWS/SES'
-                    },
-                    Period: 604800,
-                    Stat: 'Sum',
+                    Period: 300,
+                    Stat: 'Average',
                 },
             },
         ]
